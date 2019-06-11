@@ -1,0 +1,31 @@
+#antigen
+source $HOME/antigen.zsh
+    
+# Load the oh-my-zsh's library
+antigen use oh-my-zsh
+
+antigen bundle <<EOBUNDLES
+    # Bundles from the default repo (robbyrussell's oh-my-zsh)
+    git
+    docker
+
+    # Syntax highlighting bundle.
+    zsh-users/zsh-syntax-highlighting
+
+    # Fish-like auto suggestions
+    zsh-users/zsh-autosuggestions
+
+    # Extra zsh completions
+    zsh-users/zsh-completions
+EOBUNDLES
+
+# Load the theme
+antigen theme denysdovhan/spaceship-prompt
+
+# completions
+source $HOME/.local/bin/aws_zsh_completer.sh  # aws-cli
+source <(kubectl completion zsh)              # kubectl
+fpath=($fpath ~/.zsh/completion)              # eksctl
+
+# Tell antigen that you're done
+antigen apply
