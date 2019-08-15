@@ -27,5 +27,14 @@ source $HOME/.local/bin/aws_zsh_completer.sh  # aws-cli
 source <(kubectl completion zsh)              # kubectl
 fpath=($fpath ~/.zsh/completion)              # eksctl
 
+# pyenv
+export PATH="/home/claytonjy/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# pipenv
+export PIPENV_VENV_IN_PROJECT=1
+eval "$(pipenv --completion)"
+
 # Tell antigen that you're done
 antigen apply
