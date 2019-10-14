@@ -33,6 +33,7 @@ eval "$(pipenv --completion)"
 
 # completions
 source $HOME/.local/bin/aws_zsh_completer.sh  # aws-cli
+eval "$(register-python-argcomplete pipx)"    # pipx
 source <(kubectl completion zsh)              # kubectl
 fpath=($fpath ~/.zsh/completion)              # eksctl
 
