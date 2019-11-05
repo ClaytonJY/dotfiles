@@ -1,0 +1,12 @@
+{
+    "files.watcherExclude": {
+        "**/.venv/**": true
+    },
+    "gitlab.instanceUrl": "https://gitlab.everactive.com",
+    "files.insertFinalNewline": true,
+    "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontLigatures": true,
+    "files.trimTrailingWhitespace": true,
+    "[sql]": {},
+    "editor.acceptSuggestionOnEnter": "off"
+}
