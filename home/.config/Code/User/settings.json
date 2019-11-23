@@ -8,5 +8,6 @@
     "editor.fontLigatures": true,
     "files.trimTrailingWhitespace": true,
     "[sql]": {},
-    "editor.acceptSuggestionOnEnter": "off"
+    "editor.acceptSuggestionOnEnter": "off",
+    "window.zoomLevel": 0
 }
