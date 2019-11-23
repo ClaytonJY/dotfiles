@@ -39,3 +39,6 @@ fpath=($fpath ~/.zsh/completion)              # eksctl
 
 # Tell antigen that you're done
 antigen apply
+
+# start a tmux session if we aren't already in one
+if [[ -z $TMUX ]]; then tmux; fi
