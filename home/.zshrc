@@ -1,6 +1,6 @@
 #antigen
 source $HOME/antigen.zsh
-    
+
 # Load the oh-my-zsh's library
 antigen use oh-my-zsh
 
@@ -22,8 +22,11 @@ EOBUNDLES
 # Load the theme
 antigen theme denysdovhan/spaceship-prompt
 
+# go
+export PATH="$HOME/go/bin:$PATH"
+
 # pyenv
-export PATH="/home/claytonjy/.pyenv/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
