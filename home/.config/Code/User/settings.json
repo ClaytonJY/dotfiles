@@ -9,5 +9,11 @@
     "files.trimTrailingWhitespace": true,
     "[sql]": {},
     "editor.acceptSuggestionOnEnter": "off",
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ]
 }
