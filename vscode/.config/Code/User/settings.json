@@ -4,7 +4,7 @@
     },
     "gitlab.instanceUrl": "https://gitlab.everactive.com",
     "files.insertFinalNewline": true,
-    "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.fontLigatures": true,
     "files.trimTrailingWhitespace": true,
     "[sql]": {},
@@ -12,5 +12,6 @@
     "window.zoomLevel": 0,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
-    }
+    },
+    "workbench.colorTheme": "Default Dark+"
 }
