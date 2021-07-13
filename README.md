@@ -4,4 +4,6 @@ My personal dotfile repo. One directory per application, managed by [GNU Stow](h
 
 ## Usage
 
-Clone this to `~/dotfiles`, `cd dotfiles`, then `stow <application>` to deploy the version-controlled configs for `<application>` as symlinks.
+Clone this to `~/dotfiles`, `cd dotfiles`, then `stow --no-folding <application>` to deploy the version-controlled configs for `<application>` as symlinks.
+
+(the `--no-folding` option is especially important for programs like VSCode that have a lot of stuff you might not care to version mixed in)
