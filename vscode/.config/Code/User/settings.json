@@ -2,16 +2,30 @@
     "files.watcherExclude": {
         "**/.venv/**": true
     },
-    "gitlab.instanceUrl": "https://gitlab.everactive.com",
     "files.insertFinalNewline": true,
-    "editor.fontFamily": "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.fontLigatures": true,
     "files.trimTrailingWhitespace": true,
     "[sql]": {},
     "editor.acceptSuggestionOnEnter": "off",
-    "window.zoomLevel": 0,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
     },
-    "workbench.colorTheme": "Default Dark+"
+    "workbench.colorTheme": "Default Dark+",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "/usr/bin/fish"
+        },
+        "tmux": {
+            "path": "/usr/bin/tmux",
+            "icon": "terminal-tmux"
+        }
+    }
 }
