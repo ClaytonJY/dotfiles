@@ -2,8 +2,60 @@
 
 My personal dotfile repo. One directory per application, managed by [GNU Stow](https://www.gnu.org/software/stow/) as described [here](http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html).
 
+Also a general dumping ground of stuff I like having installed, to remind myself. Perhaps someday I'll automate all this...
+
 ## Usage
 
-Clone this to `~/dotfiles`, `cd dotfiles`, then `stow --no-folding <application>` to deploy the version-controlled configs for `<application>` as symlinks.
+### Initial Setup
 
-(the `--no-folding` option is especially important for programs like VSCode that have a lot of stuff you might not care to version mixed in)
+Follow these steps on a new system.
+
+#### Pre-Reqs
+
+A lot of these configs refer to [NerdFonts](https://www.nerdfonts.com). Download the `FiraCode` and `FiraMono` zipfiles from [their Downloads page](https://www.nerdfonts.com/font-downloads), then copy the `*.otf` files to `~/.local/share/fonts`, e.g.
+
+```bash
+cd ~/Downloads
+# should find FiraCode.zip and FiraMono.zip
+find -name 'Fira*.zip' -exec unzip {} -d fonts/ \;
+rm fonts/*Windows*
+mkdir ~/.local/share/fonts
+cp fonts/Fira*.otf ~/.local/share/fonts
+rm -rf fonts Fira*.zip
+```
+
+#### Stow dotfiles
+
+Clone this repo to `~/dotfiles`.
+
+**DO NOT** clone to `/src/dotfiles` or similar, unless you want to add a `-t` arg to every `stow` call!
+
+Then stow (install) everything possible:
+
+```bash
+ls -d */ | xargs stow -v --no-folding
+```
+
+#### Install programs
+
+Install programs as needed. Order _mostly_ doesn't matter now that you have fonts, but you should install `starship` before `fish`, as the latter's config references the former.
+
+Then consider installing other fun stuff, like
+- `alacritty`: nice terminal emulator, though doesn't support FiraCode (FiraMono works)
+- `ripgrep`: faster, better `grep` alternative
+- [`fd`](https://github.com/sharkdp/fd): faster, better `find` alternative
+- `jq`: how else do you look at JSON?
+
+Python-specific:
+- `pipx`: manage all your python-based tools
+- `pyenv`: because you'll need more than one python version
+- `poetry`: the only poetry package manager worth using (install w/ `pipx`!)
+
+
+### Updating controlled configs
+
+Making any change to a file placed by `stow` will be reflected here; use `git` to commit and push such changes.
+
+### Adding new configs
+
+TBD
