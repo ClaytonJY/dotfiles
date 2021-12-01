@@ -33,6 +33,7 @@ Clone this repo to `~/dotfiles`.
 Then stow (install) everything possible:
 
 ```bash
+cd ~/dotfiles
 ls -d */ | xargs stow -v --no-folding
 ```
 
@@ -58,4 +59,16 @@ Making any change to a file placed by `stow` will be reflected here; use `git` t
 
 ### Adding new configs
 
-TBD
+1. identify folder path of new configs
+1. exit program controlling said configs
+1. use `mkdir` & `touch` to stub out files in `dotfiles/`, e.g.
+    ```
+    mkdir -p kitty/.config/kitty/
+    touch kitty/.config/kitty/kitty.conf
+    ```
+2. use `--adopt` to adopt files
+    ```
+    stow --adopt kitty
+    ```
+
+TODO: automate the above steps, esp. for multi-file configs.
