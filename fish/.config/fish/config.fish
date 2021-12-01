@@ -1,11 +1,11 @@
-if status is-interactive
-
-    # starship.rs
-    starship init fish | source
-
-
+if status is-login
+    pyenv init --path | source
 end
 
-# pyenv
-status is-login; and pyenv init --path | source
-status is-interactive; and pyenv init - | source
+if status is-interactive
+
+    starship init fish | source
+
+    pyenv init - | source
+
+end
