@@ -27,5 +27,6 @@
             "path": "/usr/bin/tmux",
             "icon": "terminal-tmux"
         }
-    }
+    },
+    "editor.formatOnSave": true
 }
