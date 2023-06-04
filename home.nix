@@ -35,7 +35,13 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
+    pkgs.git
+    pkgs.nano
+
     pkgs.ripgrep
+    pkgs.jq
+
+    pkgs.pipx
 
     pkgs.rnix-lsp
     pkgs.nixpkgs-fmt
@@ -54,6 +60,8 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".gitconfig".source = ./git/.gitconfig;
+    ".gitignore".source = ./git/.gitignore;
   };
 
   # You can also manage environment variables but you will have to manually

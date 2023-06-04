@@ -3,3 +3,6 @@
 	email = claytonjy@gmail.com
 [init]
 	defaultBranch = main
+[core]
+	excludesfile = ~/.gitignore
+	editor = nano
