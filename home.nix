@@ -43,6 +43,8 @@
 
     pkgs.pipx
 
+    pkgs.kitty
+
     pkgs.rnix-lsp
     pkgs.nixpkgs-fmt
   ];
@@ -60,6 +62,7 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
     ".gitconfig".source = ./git/.gitconfig;
     ".gitignore".source = ./git/.gitignore;
   };
