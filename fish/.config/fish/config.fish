@@ -9,3 +9,6 @@ if status is-interactive
     pyenv init - | source
 
 end
+
+# Created by `pipx` on 2023-02-11 05:40:43
+set PATH $PATH /home/claytonjy/.local/bin

@@ -8,9 +8,6 @@
     "files.trimTrailingWhitespace": true,
     "[sql]": {},
     "editor.acceptSuggestionOnEnter": "off",
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
     "workbench.colorTheme": "Default Dark+",
     "terminal.integrated.profiles.linux": {
         "bash": {
@@ -28,5 +25,27 @@
             "icon": "terminal-tmux"
         }
     },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "python.analysis.completeFunctionParens": true,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "black-formatter.importStrategy": "fromEnvironment",
+    "isort.importStrategy": "fromEnvironment",
+    "pylint.importStrategy": "fromEnvironment",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.analysis.autoImportCompletions": true,
+    "redhat.telemetry.enabled": true,
+    "isort.check": true,
+    "python.linting.mypyEnabled": true,
+    "python.analysis.autoImportUserSymbols": true
 }
