@@ -42,12 +42,41 @@
     pkgs.jq
 
     pkgs.pipx
+    pkgs.poetry
 
-    pkgs.kitty
+    # TODO: get kitty working in home bar
+    # pkgs.kitty
+
+    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
 
     pkgs.rnix-lsp
     pkgs.nixpkgs-fmt
   ];
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit =
+      ''
+        starship init fish | source
+        pyenv init - | source
+      '';
+    loginShellInit =
+      ''
+        pyenv init --path | source
+      '';
+    shellInit =
+      ''
+        # for poetry
+        set PATH $PATH ~/.local/bin
+      '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  fonts.fontconfig.enable = true;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
