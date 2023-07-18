@@ -43,6 +43,7 @@
 
     pkgs.pipx
     pkgs.poetry
+    pkgs.pyenv
 
     # TODO: get kitty working in home bar
     # pkgs.kitty
@@ -55,6 +56,17 @@
 
   programs.fish = {
     enable = true;
+    plugins = [
+      {
+        name = "nix-env";
+        src = pkgs.fetchFromGitHub {
+          owner = "lilyball";
+          repo = "nix-env.fish";
+          rev = "master";
+          sha256 = "RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
+        };
+      }
+    ];
     interactiveShellInit =
       ''
         starship init fish | source
