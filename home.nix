@@ -106,6 +106,8 @@
 
     ".gitconfig".source = ./git/.gitconfig;
     ".gitignore".source = ./git/.gitignore;
+
+    ".abridge.gitconfig".source = ./git/.abridge.gitconfig;
   };
 
   # You can also manage environment variables but you will have to manually
