@@ -108,6 +108,8 @@
     ".gitignore".source = ./git/.gitignore;
 
     ".abridge.gitconfig".source = ./git/.abridge.gitconfig;
+
+    ".config/pypoetry/config.toml".source = ./poetry/config.toml;
   };
 
   # You can also manage environment variables but you will have to manually
