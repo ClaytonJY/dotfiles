@@ -42,7 +42,6 @@
     pkgs.jq
 
     pkgs.pipx
-    pkgs.poetry
     pkgs.pyenv
 
     # TODO: get kitty working in home bar
