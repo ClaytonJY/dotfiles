@@ -1,74 +1,91 @@
 # dotfiles
 
-My personal dotfile repo. One directory per application, managed by [GNU Stow](https://www.gnu.org/software/stow/) as described [here](http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html).
+My personal dotfile repo. Managed with [`nix`](https://nixos.org/manual/nix/stable/introduction.html) and [`home-manager`](https://nix-community.github.io/home-manager/index.html).
 
-Also a general dumping ground of stuff I like having installed, to remind myself. Perhaps someday I'll automate all this...
+## Bootstrapping a new environment
 
-## Usage
+Use the [Determinate Systems Nix Installer](https://zero-to-nix.com/concepts/nix-installer) to install nix, and `git clone` this repository
 
-### Initial Setup
+```shell
+# requires curl & git, e.g.
+sudo apt update && sudo apt install -y curl git
 
-Follow these steps on a new system.
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
-#### Pre-Reqs
-
-A lot of these configs refer to [NerdFonts](https://www.nerdfonts.com). Download the `FiraCode` and `FiraMono` zipfiles from [their Downloads page](https://www.nerdfonts.com/font-downloads), then copy the `*.otf` files to `~/.local/share/fonts`, e.g.
-
-```bash
-cd ~/Downloads
-# should find FiraCode.zip and FiraMono.zip
-find -name 'Fira*.zip' -exec unzip {} -d fonts/ \;
-rm fonts/*Windows*
-mkdir ~/.local/share/fonts
-cp fonts/Fira*.otf ~/.local/share/fonts
-rm -rf fonts Fira*.zip
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 ```
 
-#### Stow dotfiles
+To start using this configuration, first bootstrap `home-manager`
 
-Clone this repo to `~/dotfiles`.
-
-**DO NOT** clone to `/src/dotfiles` or similar, unless you want to add a `-t` arg to every `stow` call!
-
-Then stow (install) everything possible:
-
-```bash
-cd ~/dotfiles
-ls -d */ | xargs stow -v --no-folding
+```shell
+mkdir -p ~/.local/state/nix/profiles
+nix run home-manager/master -- switch --flake .
 ```
 
-#### Install programs
+then change default shell to `fish`
 
-Install programs as needed. Order _mostly_ doesn't matter now that you have fonts, but you should install `starship` before `fish`, as the latter's config references the former.
+```shell
+# add fish to list of shells
+echo $(which fish) | sudo tee -a /etc/shells
 
-Then consider installing other fun stuff, like
-- `alacritty`: nice terminal emulator, though doesn't support FiraCode (FiraMono works)
-- `ripgrep`: faster, better `grep` alternative
-- [`fd`](https://github.com/sharkdp/fd): faster, better `find` alternative
-- `jq`: how else do you look at JSON?
+# change login shell to fish
+chsh -s $(which fish)
+# or on some systems (e.g. most VMs)
+sudo chsh -s $(which fish) "$USER"
+```
 
-Python-specific:
-- `pipx`: manage all your python-based tools
-- `pyenv`: because you'll need more than one python version
-- `poetry`: the only poetry package manager worth using (install w/ `pipx`!)
+## Development
 
+When making changes to the configuration here, apply with
 
-### Updating controlled configs
+```shell
+home-manager switch --flake .
+```
 
-Making any change to a file placed by `stow` will be reflected here; use `git` to commit and push such changes.
+**N.B.**: sometimes we need to update our lockfile
 
-### Adding new configs
+```shell
+nix flake update
+```
 
-1. identify folder path of new configs
-1. exit program controlling said configs
-1. use `mkdir` & `touch` to stub out files in `dotfiles/`, e.g.
-    ```
-    mkdir -p kitty/.config/kitty/
-    touch kitty/.config/kitty/kitty.conf
-    ```
-2. use `--adopt` to adopt files
-    ```
-    stow --adopt kitty
-    ```
+### Vagrant
 
-TODO: automate the above steps, esp. for multi-file configs.
+To more easily test this config I've added a `Vagrantfile` to spin up a VM. Only makes sense for headless stuff.
+
+Start it with `vagrant up` then log in with `vagrant ssh`. It'll setup a user, `nix`, `home-manager`, etc.
+
+Use `vagrant down` to turn the VM off, or `vagrant destroy` to trash it.
+
+## Non-Nix
+
+There's a lot of things that seem like they could or should be managed here, but aren't.
+
+### Pyenv Build Dependencies
+
+Haven't yet figured out how to include all the pieces needed to `pyenv install` a new version of python within `home.nix`.
+
+On a Debian-like system, per the [pyenv docs](https://github.com/pyenv/pyenv/wiki#suggested-build-environment):
+
+```shell
+sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev curl \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+```
+
+### Poetry
+
+Using a nix-managed poetry leads to weird issues with packages like `numpy`, see [this thread](https://discourse.nixos.org/t/nixos-with-poetry-installed-pandas-libstdc-so-6-cannot-open-shared-object-file/8442).
+
+So instead I `pipx install poetry`.
+
+## Resources
+
+- [`nix` package search](https://search.nixos.org/packages)
+- [`home-manager` options search](https://mipmip.github.io/home-manager-option-search/)
+
+- [Fonts - NixOX wiki](https://nixos.wiki/wiki/Fonts)
+
+- [Declarative management of dotfiles with Nix and Home Manager (2021)](https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager)
+- [Managing dotfiles with Nix (2021)](https://alexpearce.me/2021/07/managing-dotfiles-with-nix/)
+- [Zero to Nix](https://zero-to-nix.com/)
+- [Dustin Lyons' Nix Config](https://github.com/dustinlyons/nixos-config)

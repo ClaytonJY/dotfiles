@@ -3,3 +3,9 @@
 	email = claytonjy@gmail.com
 [init]
 	defaultBranch = main
+[core]
+	excludesfile = ~/.gitignore
+	editor = nano
+
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:abridge-ai/**"]
+	path = ~/.abridge.gitconfig
