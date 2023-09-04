@@ -7,33 +7,30 @@
 
   home.stateVersion = "22.11";
 
-  home.packages = [
+  home.packages = with pkgs; [
 
-    pkgs.git
-    pkgs.nano
+    git
+    nano
 
-    pkgs.ripgrep
-    pkgs.jq
-    pkgs.fd
-    pkgs.bat
-    pkgs.fzf
-    pkgs.sd
-    pkgs.exa
+    ripgrep
+    jq
+    fd
+    bat
+    fzf
+    sd
+    exa
 
-    pkgs.ffmpeg
+    ffmpeg
 
-    pkgs.kubernetes-helm
+    kubernetes-helm
 
-    pkgs.pipx
-    pkgs.pyenv
+    pipx
+    pyenv
 
-    # TODO: get kitty working in home bar
-    # pkgs.kitty
+    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
 
-    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
-
-    pkgs.rnix-lsp
-    pkgs.nixpkgs-fmt
+    rnix-lsp
+    nixpkgs-fmt
   ];
 
   programs.fish = {
@@ -80,19 +77,8 @@
 
   fonts.fontconfig.enable = true;
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+  home.file = {
 
     ".gitconfig".source = ./git/.gitconfig;
     ".gitignore".source = ./git/.gitignore;
@@ -100,22 +86,12 @@
     ".abridge.gitconfig".source = ./git/.abridge.gitconfig;
 
     ".config/pypoetry/config.toml".source = ./poetry/config.toml;
+
   };
 
-  # You can also manage environment variables but you will have to manually
-  # source
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/claytonjy/etc/profile.d/hm-session-vars.sh
-  #
-  # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
