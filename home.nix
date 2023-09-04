@@ -40,6 +40,9 @@
 
     pkgs.ripgrep
     pkgs.jq
+    pkgs.fd
+    pkgs.bat
+    pkgs.fzf
 
     pkgs.pipx
     pkgs.pyenv
@@ -64,6 +67,10 @@
           rev = "master";
           sha256 = "RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
         };
+      }
+      {
+        name = "fzf.fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
       }
     ];
     interactiveShellInit =
