@@ -64,8 +64,8 @@
       '';
     shellInit =
       ''
-        # for poetry
-        set PATH $PATH ~/.local/bin
+        # pipx install dir
+        fish_add_path -g ~/.local/bin
       '';
     shellAliases = {
       ls = "exa";

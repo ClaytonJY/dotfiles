@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
 
-    vb.memory = "1024"
+    vb.memory = "2048"
 
   end
 
@@ -24,14 +24,9 @@ Vagrant.configure("2") do |config|
     # run home-manager bootstrap commands as user
     sudo -u claytonjy -i bash <<'EOF'
 
-      # move files
-      cd /vagrant
-      mkdir -p ~/.config/home-manager
-      cp -r flake.nix flake.lock home.nix git poetry ~/.config/home-manager
-
       # bootstrap home-manager
       mkdir -p ~/.local/state/nix/profiles
-      nix run home-manager/master -- switch
+      nix run home-manager/master -- switch --flake /vagrant
 
       # change shell to fish
       echo $(which fish) | sudo tee -a /etc/shells
