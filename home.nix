@@ -18,7 +18,7 @@
     bat
     fzf
     sd
-    exa
+    eza
 
     ffmpeg
 
@@ -65,8 +65,8 @@
         fish_add_path -g ~/.local/bin
       '';
     shellAliases = {
-      ls = "exa";
-      ll = "exa -al --icons";
+      ls = "eza";
+      ll = "eza -al --icons";
     };
   };
 
