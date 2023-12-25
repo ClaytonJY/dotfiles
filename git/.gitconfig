@@ -6,6 +6,10 @@
 [core]
 	excludesfile = ~/.gitignore
 	editor = nano
+[rebase]
+	updateRefs = true
+[rerere]
+	enabled = true
 
 [includeIf "hasconfig:remote.*.url:git@bitbucket.org:abridge-ai/**"]
 	path = ~/.abridge.gitconfig
