@@ -13,13 +13,17 @@
     git-absorb
     nano
 
-    ripgrep
-    jq
-    fd
-    bat
+    # modern shell tools
+    ripgrep  # grep
+    fd       # find
+    bat      # cat
+    sd       # sed
+    eza      # ls/exa
+    zoxide   # cd
+    mise     # asdf/direnv/pyenv
+
     fzf
-    sd
-    eza
+    jq
 
     ffmpeg
 
@@ -55,6 +59,8 @@
       ''
         starship init fish | source
         pyenv init - | source
+        zoxide init fish | source
+        mise activate fish | source
       '';
     loginShellInit =
       ''
