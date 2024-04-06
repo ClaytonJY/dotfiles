@@ -29,7 +29,6 @@
 
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
 
-    rnix-lsp
     nixpkgs-fmt
   ];
 
