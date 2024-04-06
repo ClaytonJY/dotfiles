@@ -10,6 +10,7 @@
   home.packages = with pkgs; [
 
     git
+    git-absorb
     nano
 
     ripgrep
@@ -23,6 +24,7 @@
     ffmpeg
 
     kubernetes-helm
+    dive
 
     pipx
     pyenv
