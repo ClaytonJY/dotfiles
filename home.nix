@@ -29,7 +29,7 @@
 
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
 
-    nixpkgs-fmt
+    nil
   ];
 
   programs.fish = {
