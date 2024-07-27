@@ -32,6 +32,7 @@
 
     pipx
     pyenv
+    rye
 
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
 
