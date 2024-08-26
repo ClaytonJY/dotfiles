@@ -9,8 +9,6 @@
 
   home.packages = with pkgs; [
 
-    git
-    git-lfs
     git-absorb
     nano
 
@@ -39,6 +37,57 @@
 
     nil
   ];
+
+  programs.git = {
+    enable = true;
+
+    userName = "Clayton Yochum";
+    userEmail = "claytonjy@gmail.com";
+
+    lfs.enable = true;
+    
+    extraConfig = {
+
+      init.defaultBranch = "main";
+
+      core = {
+        editor = "nano";
+      };
+
+      push.autoSetupRemote = true;
+
+      rebase.updateRefs = true;
+
+      rerere.enabled = true;
+    };
+
+    includes = [
+      {
+        condition = "hasconfig:remote.*.url:git@bitbucket.org:abridge-ai/**";
+        contents = {
+          user = {
+            email = "clayton@abridge.com";
+          };
+        };
+      }
+      {
+        condition = "hasconfig:remote.*.url:git@github.com:abridgeai/**";
+        contents = {
+          user = {
+            email = "clayton@abridge.com";
+          };
+        };
+      }
+    ];
+
+    ignores = [
+      ".python-version"
+      ".vscode"
+      ".venv"
+      ".vagrant"
+    ];
+
+  };
 
   programs.fish = {
     enable = true;
@@ -94,7 +143,6 @@
 
   home.file = {
 
-    ".gitconfig".source = ./git/.gitconfig;
     ".gitignore".source = ./git/.gitignore;
 
     ".abridge.gitconfig".source = ./git/.abridge.gitconfig;
