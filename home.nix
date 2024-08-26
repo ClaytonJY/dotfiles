@@ -45,7 +45,7 @@
     userEmail = "claytonjy@gmail.com";
 
     lfs.enable = true;
-    
+
     extraConfig = {
 
       init.defaultBranch = "main";
@@ -142,13 +142,7 @@
 
 
   home.file = {
-
-    ".gitignore".source = ./git/.gitignore;
-
-    ".abridge.gitconfig".source = ./git/.abridge.gitconfig;
-
     ".config/pypoetry/config.toml".source = ./poetry/config.toml;
-
   };
 
   home.sessionVariables = {
