@@ -20,6 +20,7 @@
     eza      # ls/exa
     zoxide   # cd
     mise     # asdf/direnv/pyenv
+    zellij   # tmux
 
     fzf
     jq
@@ -126,11 +127,6 @@
       ls = "eza";
       ll = "eza -al --icons";
     };
-  };
-
-  programs.zellij = {
-    enable = true;
-    enableFishIntegration = true;
   };
 
   programs.starship = {
