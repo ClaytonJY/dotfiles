@@ -12,6 +12,8 @@
     git-absorb
     nano
 
+    gh
+
     # modern shell tools
     ripgrep  # grep
     fd       # find
@@ -34,7 +36,8 @@
     pyenv
     uv
 
-    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
 
     nil
   ];
