@@ -90,7 +90,6 @@
       ".python-version"
       ".vscode"
       ".venv"
-      ".vagrant"
     ];
 
   };

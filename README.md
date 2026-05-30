@@ -48,14 +48,6 @@ home-manager switch --flake .
 nix flake update
 ```
 
-### Vagrant
-
-To more easily test this config I've added a `Vagrantfile` to spin up a VM. Only makes sense for headless stuff.
-
-Start it with `vagrant up` then log in with `vagrant ssh`. It'll setup a user, `nix`, `home-manager`, etc.
-
-Use `vagrant down` to turn the VM off, or `vagrant destroy` to trash it.
-
 ## Resources
 
 - [`nix` package search](https://search.nixos.org/packages)
