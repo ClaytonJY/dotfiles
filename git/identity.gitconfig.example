@@ -1,0 +1,10 @@
+[user]
+  name = Your Name
+  email = you@example.com
+
+# Optional, usually only in ~/.config/git/local.gitconfig:
+# [includeIf "gitdir:~/work/example-company/"]
+#   path = ~/.config/git/example-company.gitconfig
+#
+# [includeIf "hasconfig:remote.*.url:git@github.com:example-org/**"]
+#   path = ~/.config/git/example-company.gitconfig

@@ -24,6 +24,28 @@ sudo mv /nix/receipt.json "/nix/receipt-upstream-${ts}.json"
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
+Configure a private Git identity outside this public repo:
+
+```shell
+mkdir -p ~/.config/git
+cp git/identity.gitconfig.example ~/.config/git/local.gitconfig
+nano ~/.config/git/local.gitconfig
+```
+
+This configuration sets `user.useConfigOnly = true`, so Git will fail clearly
+instead of guessing an identity if the local file is missing or incomplete.
+
+For work-specific identities, copy the same example again:
+
+```shell
+cp git/identity.gitconfig.example ~/.config/git/example-company.gitconfig
+nano ~/.config/git/example-company.gitconfig
+```
+
+Then add private `includeIf` routing rules to `~/.config/git/local.gitconfig`.
+Use `gitdir:` rules for local checkout directories or `hasconfig:remote.*.url:`
+rules for specific Git hosting orgs.
+
 To start using this configuration, first bootstrap `home-manager`
 
 ```shell

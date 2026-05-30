@@ -5,7 +5,9 @@
   home.username = "claytonjy";
   home.homeDirectory = "/home/claytonjy";
 
-  home.stateVersion = "22.11";
+  # Set to the Home Manager release whose stateful defaults this config follows.
+  # Do not bump casually; it gates file locations, formats, and other migrations.
+  home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
   home.sessionPath = [
     "$HOME/.local/bin"
@@ -51,8 +53,7 @@
 
     settings = {
       user = {
-        name = "Clayton Yochum";
-        email = "claytonjy@gmail.com";
+        useConfigOnly = true;
       };
       init.defaultBranch = "main";
 
@@ -69,20 +70,7 @@
 
     includes = [
       {
-        condition = "hasconfig:remote.*.url:git@bitbucket.org:abridge-ai/**";
-        contents = {
-          user = {
-            email = "clayton@abridge.com";
-          };
-        };
-      }
-      {
-        condition = "hasconfig:remote.*.url:git@github.com:abridgeai/**";
-        contents = {
-          user = {
-            email = "clayton@abridge.com";
-          };
-        };
+        path = "~/.config/git/local.gitconfig";
       }
     ];
 
