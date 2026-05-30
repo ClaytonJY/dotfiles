@@ -56,28 +56,6 @@ Start it with `vagrant up` then log in with `vagrant ssh`. It'll setup a user, `
 
 Use `vagrant down` to turn the VM off, or `vagrant destroy` to trash it.
 
-## Non-Nix
-
-There's a lot of things that seem like they could or should be managed here, but aren't.
-
-### Pyenv Build Dependencies
-
-Haven't yet figured out how to include all the pieces needed to `pyenv install` a new version of python within `home.nix`.
-
-On a Debian-like system, per the [pyenv docs](https://github.com/pyenv/pyenv/wiki#suggested-build-environment):
-
-```shell
-sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev curl \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-```
-
-### Poetry
-
-Using a nix-managed poetry leads to weird issues with packages like `numpy`, see [this thread](https://discourse.nixos.org/t/nixos-with-poetry-installed-pandas-libstdc-so-6-cannot-open-shared-object-file/8442).
-
-So instead I `pipx install poetry`.
-
 ## Resources
 
 - [`nix` package search](https://search.nixos.org/packages)

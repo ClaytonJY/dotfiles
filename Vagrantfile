@@ -31,9 +31,6 @@ Vagrant.configure("2") do |config|
       # change shell to fish
       echo $(which fish) | sudo tee -a /etc/shells
       sudo chsh -s $(which fish) "$USER"
-
-      # install poetry w/ pipx
-      pipx install poetry
 EOF
 
   SHELL

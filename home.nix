@@ -6,6 +6,10 @@
   home.homeDirectory = "/home/claytonjy";
 
   home.stateVersion = "22.11";
+  home.enableNixpkgsReleaseCheck = false;
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
 
   home.packages = with pkgs; [
 
@@ -21,7 +25,7 @@
     sd       # sed
     eza      # ls/exa
     zoxide   # cd
-    mise     # asdf/direnv/pyenv
+    mise     # tool versions
     zellij   # tmux
 
     fzf
@@ -32,8 +36,6 @@
     kubernetes-helm
     dive
 
-    pipx
-    pyenv
     uv
 
     nerd-fonts.fira-code
@@ -45,13 +47,13 @@
   programs.git = {
     enable = true;
 
-    userName = "Clayton Yochum";
-    userEmail = "claytonjy@gmail.com";
-
     lfs.enable = true;
 
-    extraConfig = {
-
+    settings = {
+      user = {
+        name = "Clayton Yochum";
+        email = "claytonjy@gmail.com";
+      };
       init.defaultBranch = "main";
 
       core = {
@@ -112,19 +114,8 @@
     ];
     interactiveShellInit =
       ''
-        starship init fish | source
-        pyenv init - | source
         zoxide init fish | source
         mise activate fish | source
-      '';
-    loginShellInit =
-      ''
-        pyenv init --path | source
-      '';
-    shellInit =
-      ''
-        # pipx install dir
-        fish_add_path -g ~/.local/bin
       '';
     shellAliases = {
       ls = "eza";
@@ -138,11 +129,6 @@
   };
 
   fonts.fontconfig.enable = true;
-
-
-  home.file = {
-    ".config/pypoetry/config.toml".source = ./poetry/config.toml;
-  };
 
   home.sessionVariables = {
     # EDITOR = "emacs";
