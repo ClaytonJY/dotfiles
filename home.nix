@@ -27,7 +27,6 @@
     eza      # ls/exa
     zellij   # tmux
 
-    fzf
     jq
 
     ffmpeg
@@ -74,6 +73,11 @@
       ".venv"
     ];
 
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = false;
   };
 
   programs.fish = {
