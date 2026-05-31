@@ -57,7 +57,7 @@ To start using this configuration, first bootstrap `home-manager`
 
 ```shell
 mkdir -p ~/.local/state/nix/profiles
-nix run home-manager/master -- switch --flake .#claytonjy
+nix run home-manager/master -- switch --flake .#personal-linux
 ```
 
 then change default shell to `fish`
@@ -77,7 +77,7 @@ sudo chsh -s $(which fish) "$USER"
 When making changes to the configuration here, apply with
 
 ```shell
-home-manager switch --flake .
+home-manager switch --flake .#personal-linux
 ```
 
 **N.B.**: sometimes we need to update our lockfile

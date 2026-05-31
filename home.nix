@@ -2,9 +2,6 @@
 
 {
 
-  home.username = "claytonjy";
-  home.homeDirectory = "/home/claytonjy";
-
   # Set to the Home Manager release whose stateful defaults this config follows.
   # Do not bump casually; it gates file locations, formats, and other migrations.
   home.stateVersion = "26.05";

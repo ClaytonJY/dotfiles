@@ -13,11 +13,22 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      mkHome = { username, homeDirectory, modules ? [ ] }:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            {
+              home.username = username;
+              home.homeDirectory = homeDirectory;
+            }
+            ./home.nix
+          ] ++ modules;
+        };
     in
     {
-      homeConfigurations."claytonjy" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home.nix ];
+      homeConfigurations."personal-linux" = mkHome {
+        username = "claytonjy";
+        homeDirectory = "/home/claytonjy";
       };
       formatter.${system} = pkgs.nixpkgs-fmt;
     };
