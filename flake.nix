@@ -56,6 +56,13 @@
         };
       };
 
+      apps = forAllSystems (system: {
+        home-manager = {
+          type = "app";
+          program = "${home-manager.packages.${system}.home-manager}/bin/home-manager";
+        };
+      });
+
       formatter =
         forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
     };

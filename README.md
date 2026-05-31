@@ -69,7 +69,7 @@ To start using this configuration, first bootstrap `home-manager`
 
 ```shell
 mkdir -p ~/.local/state/nix/profiles
-nix run home-manager/master -- switch --flake .#linux-laptop
+nix run .#home-manager -- switch --flake .#linux-laptop
 ```
 
 then change default shell to `fish`
