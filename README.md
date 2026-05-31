@@ -53,11 +53,23 @@ Then add private `includeIf` routing rules to `~/.config/git/local.gitconfig`.
 Use `gitdir:` rules for local checkout directories or `hasconfig:remote.*.url:`
 rules for specific Git hosting orgs.
 
+Profiles are named by role and platform:
+
+| Profile | Platform | GUI | Intended use |
+| --- | --- | --- | --- |
+| `linux-laptop` | `x86_64-linux` | yes | Linux laptop or desktop |
+| `macbook` | `aarch64-darwin` | yes | Apple Silicon MacBook |
+| `linux-vm` | `x86_64-linux` | no | Headless or lightweight Linux VM |
+
+Each profile sets `home.username` and `home.homeDirectory` in `flake.nix`.
+Before switching on a machine with a different account name or home path, update
+that profile's values.
+
 To start using this configuration, first bootstrap `home-manager`
 
 ```shell
 mkdir -p ~/.local/state/nix/profiles
-nix run home-manager/master -- switch --flake .#personal-linux
+nix run home-manager/master -- switch --flake .#linux-laptop
 ```
 
 then change default shell to `fish`
@@ -77,7 +89,14 @@ sudo chsh -s $(which fish) "$USER"
 When making changes to the configuration here, apply with
 
 ```shell
-home-manager switch --flake .#personal-linux
+home-manager switch --flake .#linux-laptop
+```
+
+Use the matching profile on other machines:
+
+```shell
+home-manager switch --flake .#macbook
+home-manager switch --flake .#linux-vm
 ```
 
 **N.B.**: sometimes we need to update our lockfile

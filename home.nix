@@ -39,9 +39,6 @@
 
     uv
 
-    nerd-fonts.fira-code
-    nerd-fonts.fira-mono
-
     nil
   ];
 
@@ -105,7 +102,7 @@
     enableFishIntegration = true;
   };
 
-  fonts.fontconfig.enable = true;
+  programs.man.generateCaches = pkgs.stdenv.hostPlatform.isLinux;
 
   home.sessionVariables = {
     # EDITOR = "emacs";

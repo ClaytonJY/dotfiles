@@ -11,25 +11,52 @@
 
   outputs = { nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      mkHome = { username, homeDirectory, modules ? [ ] }:
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      mkHome = { system, username, homeDirectory, extraModules ? [ ] }:
         home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = nixpkgs.legacyPackages.${system};
           modules = [
             {
               home.username = username;
               home.homeDirectory = homeDirectory;
             }
             ./home.nix
-          ] ++ modules;
+          ] ++ extraModules;
         };
+      # Capability modules compose the common base for each concrete profile.
+      profileModules = {
+        gui = [ ./profiles/gui.nix ];
+        linuxGui = [ ./profiles/linux-gui.nix ];
+      };
     in
     {
-      homeConfigurations."personal-linux" = mkHome {
-        username = "claytonjy";
-        homeDirectory = "/home/claytonjy";
+      homeConfigurations = {
+        "linux-laptop" = mkHome {
+          system = "x86_64-linux";
+          username = "claytonjy";
+          homeDirectory = "/home/claytonjy";
+          extraModules = profileModules.gui ++ profileModules.linuxGui;
+        };
+
+        "macbook" = mkHome {
+          system = "aarch64-darwin";
+          username = "claytonjy";
+          homeDirectory = "/Users/claytonjy";
+          extraModules = profileModules.gui;
+        };
+
+        "linux-vm" = mkHome {
+          system = "x86_64-linux";
+          username = "claytonjy";
+          homeDirectory = "/home/claytonjy";
+        };
       };
-      formatter.${system} = pkgs.nixpkgs-fmt;
+
+      formatter =
+        forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
     };
 }
