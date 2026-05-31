@@ -4,7 +4,7 @@ My personal dotfile repo. Managed with [`nix`](https://nixos.org/manual/nix/stab
 
 ## Bootstrapping a new environment
 
-Use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`, then `git clone` this repository.
+Use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`.
 
 ```shell
 # requires curl & git, e.g.
@@ -13,6 +13,13 @@ sudo apt update && sudo apt install -y curl git
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+```
+
+Then clone this repository:
+
+```shell
+git clone git@github.com:ClaytonJY/dotfiles.git ~/.config/home-manager
+cd ~/.config/home-manager
 ```
 
 If this machine already has an older upstream Nix install from the Determinate installer, follow the [Determinate migration guide](https://docs.determinate.systems/guides/migrating-from-upstream-nix/) first:
@@ -50,7 +57,7 @@ To start using this configuration, first bootstrap `home-manager`
 
 ```shell
 mkdir -p ~/.local/state/nix/profiles
-nix run home-manager/master -- switch --flake .
+nix run home-manager/master -- switch --flake .#claytonjy
 ```
 
 then change default shell to `fish`
@@ -95,7 +102,7 @@ sudo determinate-nixd upgrade
 - [Home Manager manual](https://home-manager.dev/manual/)
 - [`home-manager` options search](https://home-manager-options.extranix.com/)
 
-- [Fonts - NixOX wiki](https://nixos.wiki/wiki/Fonts)
+- [Fonts - NixOS wiki](https://nixos.wiki/wiki/Fonts)
 
 - [Declarative management of dotfiles with Nix and Home Manager (2021)](https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager)
 - [Managing dotfiles with Nix (2021)](https://alexpearce.me/2021/07/managing-dotfiles-with-nix/)
