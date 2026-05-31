@@ -8,6 +8,8 @@
   # Set to the Home Manager release whose stateful defaults this config follows.
   # Do not bump casually; it gates file locations, formats, and other migrations.
   home.stateVersion = "26.05";
+  # This config intentionally tracks nixpkgs-unstable, so Home Manager's
+  # release branch check is noisy rather than useful here.
   home.enableNixpkgsReleaseCheck = false;
   home.sessionPath = [
     "$HOME/.local/bin"
