@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
 
@@ -104,10 +104,6 @@
   };
 
   programs.man.generateCaches = pkgs.stdenv.hostPlatform.isLinux;
-
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
 
   programs.home-manager.enable = true;
 }
