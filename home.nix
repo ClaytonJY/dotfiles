@@ -25,8 +25,6 @@
     bat      # cat
     sd       # sed
     eza      # ls/exa
-    zoxide   # cd
-    mise     # tool versions
     zellij   # tmux
 
     fzf
@@ -86,16 +84,15 @@
         src = pkgs.fishPlugins.fzf-fish.src;
       }
     ];
-    interactiveShellInit =
-      ''
-        zoxide init fish | source
-        mise activate fish | source
-      '';
     shellAliases = {
       ls = "eza";
       ll = "eza -al --icons";
     };
   };
+
+  programs.zoxide.enable = true;
+
+  programs.mise.enable = true;
 
   programs.starship = {
     enable = true;
