@@ -42,6 +42,7 @@
           extraModules = profileModules.gui ++ profileModules.linuxGui;
         };
 
+        # Placeholder account values; edit for the actual macOS account before first use.
         "macbook" = mkHome {
           system = "aarch64-darwin";
           username = "claytonjy";
@@ -49,6 +50,7 @@
           extraModules = profileModules.gui;
         };
 
+        # Placeholder account values; edit for the target VM account before first use.
         "linux-vm" = mkHome {
           system = "x86_64-linux";
           username = "claytonjy";

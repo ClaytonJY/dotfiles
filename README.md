@@ -4,12 +4,22 @@ My personal dotfile repo. Managed with [`nix`](https://nixos.org/manual/nix/stab
 
 ## Bootstrapping a new environment
 
-Use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`.
+Install basic OS prerequisites first.
 
 ```shell
-# requires curl & git, e.g.
+# Debian, Ubuntu, Pop!_OS, etc.
 sudo apt update && sudo apt install -y curl git
+```
 
+On macOS, install the Xcode Command Line Tools if `git` is missing:
+
+```shell
+xcode-select --install
+```
+
+Then use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`.
+
+```shell
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
@@ -65,14 +75,17 @@ Each profile sets `home.username` and `home.homeDirectory` in `flake.nix`.
 Before switching on a machine with a different account name or home path, update
 that profile's values.
 
-To start using this configuration, first bootstrap `home-manager`
+To start using this configuration, first bootstrap `home-manager` with the
+profile for this machine:
 
 ```shell
 mkdir -p ~/.local/state/nix/profiles
 nix run .#home-manager -- switch --flake .#linux-laptop
 ```
 
-then change default shell to `fish`
+Use `.#macbook` on an Apple Silicon MacBook, or `.#linux-vm` on a Linux VM.
+
+On Linux, then change the default shell to `fish`:
 
 ```shell
 # add fish to list of shells
@@ -83,6 +96,10 @@ chsh -s $(which fish)
 # or on some systems (e.g. most VMs)
 sudo chsh -s $(which fish) "$USER"
 ```
+
+On macOS, run the `macbook` profile first, confirm the installed Fish path with
+`which fish`, and use the system shell settings or `chsh` if you want Fish as
+the login shell.
 
 ## Development
 
