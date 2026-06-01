@@ -114,6 +114,19 @@ On macOS, run the `macbook` profile first, confirm the installed Fish path with
 `which fish`, and use the system shell settings or `chsh` if you want Fish as
 the login shell.
 
+If this repository was cloned over HTTPS on a fresh machine, use the installed
+GitHub CLI to set up SSH and flip the remote afterward:
+
+```shell
+gh auth login --git-protocol ssh
+ssh -T git@github.com
+git remote set-url origin git@github.com:ClaytonJY/dotfiles.git
+git remote -v
+```
+
+`gh auth login --git-protocol ssh` will offer to upload an existing SSH key, or
+create and upload one if none is available.
+
 ## Development
 
 When making changes to the configuration here, apply with
