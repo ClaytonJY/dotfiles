@@ -1,3 +1,6 @@
 /result
 /result-*
 /hk.local.pkl
+
+# Private Git identity/config snippets belong under ~/.config/git.
+/git/*.gitconfig

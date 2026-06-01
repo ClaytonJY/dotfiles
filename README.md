@@ -23,8 +23,15 @@ instead of running the fresh install command below.
 
 ```shell
 ts=$(date +%Y%m%d-%H%M%S)
-sudo cp -a /etc/nix/nix.conf "/etc/nix/nix.conf.pre-determinate-${ts}"
-sudo mv /nix/receipt.json "/nix/receipt-upstream-${ts}.json"
+
+if [ -e /etc/nix/nix.conf ]; then
+  sudo cp -a /etc/nix/nix.conf "/etc/nix/nix.conf.pre-determinate-${ts}"
+fi
+
+if [ -e /nix/receipt.json ]; then
+  sudo mv /nix/receipt.json "/nix/receipt-upstream-${ts}.json"
+fi
+
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
@@ -58,7 +65,9 @@ Configure a private Git identity outside this public repo:
 
 ```shell
 mkdir -p ~/.config/git
-cp git/identity.gitconfig.example ~/.config/git/local.gitconfig
+if [ ! -e ~/.config/git/local.gitconfig ]; then
+  cp git/identity.gitconfig.example ~/.config/git/local.gitconfig
+fi
 nano ~/.config/git/local.gitconfig
 ```
 
@@ -68,7 +77,9 @@ instead of guessing an identity if the local file is missing or incomplete.
 For work-specific identities, copy the same example again:
 
 ```shell
-cp git/identity.gitconfig.example ~/.config/git/example-company.gitconfig
+if [ ! -e ~/.config/git/example-company.gitconfig ]; then
+  cp git/identity.gitconfig.example ~/.config/git/example-company.gitconfig
+fi
 nano ~/.config/git/example-company.gitconfig
 ```
 
@@ -87,6 +98,14 @@ Profiles are named by role and platform:
 Each profile sets `home.username` and `home.homeDirectory` in `flake.nix`.
 Before switching on a machine with a different account name or home path, update
 that profile's values.
+
+All profiles currently share `home.stateVersion = "26.05"` from `home.nix`.
+Treat this as the baseline for fresh Home Manager activations, not as a value to
+bump during routine lockfile or package updates. Only change it when you
+intentionally accept the stateful migrations gated by that Home Manager release.
+If an existing machine was first activated with an older state version, keep that
+older value for the machine, likely by moving `home.stateVersion` into
+profile-specific modules before switching.
 
 To start using this configuration, first bootstrap `home-manager` with the
 profile for this machine:
@@ -112,13 +131,17 @@ This installs `hk` and `pkl` from [`mise.toml`](mise.toml), then runs
 On Linux, then change the default shell to `fish`:
 
 ```shell
-# add fish to list of shells
-echo $(which fish) | sudo tee -a /etc/shells
+fish_path=$(command -v fish)
+
+# add fish to list of shells, if needed
+if ! grep -qxF "$fish_path" /etc/shells; then
+  echo "$fish_path" | sudo tee -a /etc/shells
+fi
 
 # change login shell to fish
-chsh -s $(which fish)
+chsh -s "$fish_path"
 # or on some systems (e.g. most VMs)
-sudo chsh -s $(which fish) "$USER"
+sudo chsh -s "$fish_path" "$USER"
 ```
 
 On macOS, run the `macbook` profile first, confirm the installed Fish path with
