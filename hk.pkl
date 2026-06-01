@@ -1,0 +1,29 @@
+amends "package://github.com/jdx/hk/releases/download/v1.46.0/hk@1.46.0#/Config.pkl"
+
+local fastSteps = new Mapping<String, Step> {
+  ["nix-fmt"] {
+    check = "nix fmt -- --check ."
+  }
+}
+
+local fullSteps = new Mapping<String, Step> {
+  ...fastSteps
+  ["nix-flake-check"] {
+    check = "nix flake check --all-systems"
+    depends = "nix-fmt"
+  }
+}
+
+hooks {
+  ["pre-commit"] {
+    steps = fastSteps
+  }
+
+  ["pre-push"] {
+    steps = fullSteps
+  }
+
+  ["check"] {
+    steps = fullSteps
+  }
+}

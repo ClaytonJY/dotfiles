@@ -16,7 +16,8 @@
 
 - Prefer `rg` for searching and inspect the existing module shape before editing.
 - Use `nix eval` for focused checks while developing.
-- Use `./scripts/check` when present for the normal verification pass; it runs `nix flake check --all-systems` for light cross-platform output validation.
+- Use `mise x -- hk check --all` for the normal verification pass; it runs the hk check suite, including `nix flake check --all-systems` for light cross-platform output validation.
+- When editing `hk.pkl` or `mise.toml`, also run `mise x -- hk validate`.
 - `nix flake check --all-systems` does not mean every target platform is fully buildable from every host.
 - Run `home-manager switch --flake .#<profile>` only for the current machine's intended profile.
 - The known `builtins.derivation` warning from Home Manager docs generation is noise unless it becomes an error.
@@ -33,4 +34,4 @@
 - Keep modules small and capability-oriented rather than username-oriented.
 - Prefer Home Manager program modules when they own real behavior, shell integration, or config files.
 - Keep README bootstrap steps current with the flake profile names.
-- Avoid adding repo automation or hooks unless repeated friction justifies it.
+- Keep repo automation local to this repository unless there is a clear reason to make it global.

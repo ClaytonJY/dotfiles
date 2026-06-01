@@ -1,0 +1,12 @@
+[tools]
+hk = "1.46.0"
+pkl = "0.31.1"
+
+[env]
+HK_MISE = "1"
+
+[settings]
+experimental = true
+
+[hooks]
+postinstall = "hk install --mise"

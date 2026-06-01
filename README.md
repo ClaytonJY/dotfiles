@@ -98,6 +98,17 @@ nix run .#home-manager -- switch --flake .#linux-laptop
 
 Use `.#macbook` on an Apple Silicon MacBook, or `.#linux-vm` on a Linux VM.
 
+Then install this repo's development check tools and local Git hooks:
+
+```shell
+mise trust
+mise install
+```
+
+This installs `hk` and `pkl` from [`mise.toml`](mise.toml), then runs
+`hk install --mise` for this clone. The hooks are local to this repository:
+`pre-commit` checks formatting, while `pre-push` runs the full flake check.
+
 On Linux, then change the default shell to `fish`:
 
 ```shell
@@ -137,8 +148,19 @@ the repo shape, known warnings, profile model, and verification expectations.
 For a normal verification pass, run:
 
 ```shell
-./scripts/check
+hk check --all
 ```
+
+That runs the same check suite as the repo hooks. If `hk` is not on `PATH` in
+the current shell, use the explicit mise form:
+
+```shell
+mise x -- hk check --all
+```
+
+The automated hooks are intentionally repo-local. This avoids writing hk config
+into Home Manager-managed global Git config while still making checks automatic
+for commits and pushes from this clone.
 
 When making changes to the configuration here, apply with
 
@@ -174,6 +196,8 @@ sudo determinate-nixd upgrade
 - [Determinate upstream Nix migration guide](https://docs.determinate.systems/guides/migrating-from-upstream-nix/)
 - [Home Manager manual](https://home-manager.dev/manual/)
 - [`home-manager` options search](https://home-manager-options.extranix.com/)
+- [hk docs](https://hk.jdx.dev/)
+- [mise docs](https://mise.jdx.dev/)
 
 - [Fonts - NixOS wiki](https://nixos.wiki/wiki/Fonts)
 
