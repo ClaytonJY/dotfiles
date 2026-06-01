@@ -16,9 +16,9 @@
 
 - Prefer `rg` for searching and inspect the existing module shape before editing.
 - Use `nix eval` for focused checks while developing.
-- Use `mise x -- hk check --all` for the normal verification pass; it runs the hk check suite, including `nix flake check --all-systems` for light cross-platform output validation.
+- Use `mise x -- hk check --all` for the normal verification pass; it runs the hk check suite, including `nix flake check --all-systems --no-build` for cross-platform output evaluation and `nix flake check` for current-system activation builds.
 - When editing `hk.pkl` or `mise.toml`, also run `mise x -- hk validate`.
-- `nix flake check --all-systems` does not mean every target platform is fully buildable from every host.
+- `nix flake check --all-systems --no-build` evaluates every supported system; `nix flake check` builds only the checks for the current host system.
 - Run `home-manager switch --flake .#<profile>` only for the current machine's intended profile.
 - The known `builtins.derivation` warning from Home Manager docs generation is noise unless it becomes an error.
 - New files referenced from `flake.nix` must be tracked in Git before Nix can evaluate them through the local Git flake.

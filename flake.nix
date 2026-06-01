@@ -32,8 +32,6 @@
         gui = [ ./profiles/gui.nix ];
         linuxGui = [ ./profiles/linux-gui.nix ];
       };
-    in
-    {
       homeConfigurations = {
         "linux-laptop" = mkHome {
           system = "x86_64-linux";
@@ -55,6 +53,20 @@
           system = "x86_64-linux";
           username = "claytonjy";
           homeDirectory = "/home/claytonjy";
+        };
+      };
+    in
+    {
+      inherit homeConfigurations;
+
+      checks = {
+        "x86_64-linux" = {
+          linux-laptop = homeConfigurations."linux-laptop".activationPackage;
+          linux-vm = homeConfigurations."linux-vm".activationPackage;
+        };
+
+        "aarch64-darwin" = {
+          macbook = homeConfigurations.macbook.activationPackage;
         };
       };
 

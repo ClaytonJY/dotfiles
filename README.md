@@ -126,7 +126,7 @@ mise install
 
 This installs `hk` and `pkl` from [`mise.toml`](mise.toml), then runs
 `hk install --mise` for this clone. The hooks are local to this repository:
-`pre-commit` checks formatting, while `pre-push` runs the full flake check.
+`pre-commit` checks formatting, while `pre-push` runs the full check suite.
 
 On Linux, then change the default shell to `fish`:
 
@@ -180,6 +180,12 @@ the current shell, use the explicit mise form:
 ```shell
 mise x -- hk check --all
 ```
+
+The full suite checks Nix formatting, evaluates all supported systems with
+`nix flake check --all-systems --no-build`, then runs `nix flake check` to build
+the flake checks for the current host system. Home Manager activation packages
+are exposed as flake-native checks, so Linux hosts build the Linux profiles and
+Apple Silicon Macs build the `macbook` profile.
 
 The automated hooks are intentionally repo-local. This avoids writing hk config
 into Home Manager-managed global Git config while still making checks automatic

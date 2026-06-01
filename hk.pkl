@@ -8,9 +8,13 @@ local fastSteps = new Mapping<String, Step> {
 
 local fullSteps = new Mapping<String, Step> {
   ...fastSteps
-  ["nix-flake-check"] {
-    check = "nix flake check --all-systems"
+  ["nix-flake-eval"] {
+    check = "nix flake check --all-systems --no-build"
     depends = "nix-fmt"
+  }
+  ["nix-flake-check"] {
+    check = "nix flake check"
+    depends = "nix-flake-eval"
   }
 }
 
