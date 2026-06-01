@@ -11,34 +11,47 @@ Install basic OS prerequisites first.
 sudo apt update && sudo apt install -y curl git
 ```
 
-On macOS, install the Xcode Command Line Tools if `git` is missing:
+On macOS, install the Xcode Command Line Tools if `git` is missing.
 
 ```shell
 xcode-select --install
 ```
 
-Then use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`.
-
-```shell
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-
-. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-```
-
-Then clone this repository:
-
-```shell
-git clone git@github.com:ClaytonJY/dotfiles.git ~/.config/home-manager
-cd ~/.config/home-manager
-```
-
-If this machine already has an older upstream Nix install from the Determinate installer, follow the [Determinate migration guide](https://docs.determinate.systems/guides/migrating-from-upstream-nix/) first:
+If this machine already has an older upstream Nix install from the Determinate
+installer, follow the [Determinate migration guide](https://docs.determinate.systems/guides/migrating-from-upstream-nix/)
+instead of running the fresh install command below.
 
 ```shell
 ts=$(date +%Y%m%d-%H%M%S)
 sudo cp -a /etc/nix/nix.conf "/etc/nix/nix.conf.pre-determinate-${ts}"
 sudo mv /nix/receipt.json "/nix/receipt-upstream-${ts}.json"
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+Otherwise, use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`.
+
+```shell
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+Then refresh the shell environment:
+
+```shell
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+```
+
+Then clone this repository. Use SSH if the machine already has GitHub SSH keys:
+
+```shell
+git clone git@github.com:ClaytonJY/dotfiles.git ~/.config/home-manager
+cd ~/.config/home-manager
+```
+
+Or use HTTPS on a fresh machine:
+
+```shell
+git clone https://github.com/ClaytonJY/dotfiles.git ~/.config/home-manager
+cd ~/.config/home-manager
 ```
 
 Configure a private Git identity outside this public repo:

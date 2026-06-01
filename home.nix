@@ -20,12 +20,12 @@
     gh
 
     # modern shell tools
-    ripgrep  # grep
-    fd       # find
-    bat      # cat
-    sd       # sed
-    eza      # ls/exa
-    zellij   # tmux
+    ripgrep # grep
+    fd # find
+    bat # cat
+    sd # sed
+    eza # ls/exa
+    zellij # tmux
 
     jq
 
