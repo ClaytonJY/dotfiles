@@ -129,6 +129,17 @@ create and upload one if none is available.
 
 ## Development
 
+### Working with Codex
+
+Future Codex sessions should start with [`AGENTS.md`](AGENTS.md), which captures
+the repo shape, known warnings, profile model, and verification expectations.
+
+For a normal verification pass, run:
+
+```shell
+./scripts/check
+```
+
 When making changes to the configuration here, apply with
 
 ```shell
