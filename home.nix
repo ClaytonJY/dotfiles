@@ -69,7 +69,6 @@
     ];
 
     ignores = [
-      ".python-version"
       ".vscode"
       ".venv"
     ];
