@@ -117,6 +117,29 @@ nix run .#home-manager -- switch --flake .#linux-laptop
 
 Use `.#macbook` on an Apple Silicon MacBook, or `.#linux-vm` on a Linux VM.
 
+For `linux-laptop` on a non-NixOS distribution, finish the GPU setup before
+launching Ghostty or other GPU-accelerated Nix apps. The profile enables Home
+Manager's `targets.genericLinux` integration, but creating the system-wide
+`/run/opengl-driver` link requires a separate sudo command. Look for the
+`Activating checkExistingGpuDrivers` warning in the switch output and run the
+exact command it prints, which looks like:
+
+```text
+sudo /nix/store/HASH-non-nixos-gpu/bin/non-nixos-gpu-setup
+```
+
+`HASH` is a placeholder; use the path from your current switch output. If you
+missed the warning, rerun `home-manager switch --flake .#linux-laptop` to see it
+again. The setup persists across reboots, but later Home Manager switches may
+print a new command when the graphics libraries need updating. Run that command
+when prompted, then fully quit and reopen Ghostty.
+
+Without this setup, Ghostty can report that it is unable to acquire an OpenGL
+context even when native apps work. See [Ghostty's GTK OpenGL context
+troubleshooting](https://ghostty.org/docs/help/gtk-opengl-context), its
+[non-NixOS installation guidance](https://ghostty.org/docs/install/binary#nix-on-other-distros),
+and [Home Manager's GPU setup documentation](https://github.com/nix-community/home-manager/blob/master/docs/manual/usage/gpu-non-nixos.md).
+
 Then install this repo's development check tools and local Git hooks:
 
 ```shell
