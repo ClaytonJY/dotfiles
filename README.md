@@ -117,6 +117,8 @@ nix run .#home-manager -- switch --flake .#linux-laptop
 
 Use `.#macbook` on an Apple Silicon MacBook, or `.#linux-vm` on a Linux VM.
 
+All profiles include Docker, `kind`, `kubectl`, and Helm 4. Home Manager provides the Docker command but does not install or start a Docker daemon. Install and start Docker Engine through the host OS on Linux; on macOS, use Docker Desktop or Colima. `kind` requires a reachable Docker daemon.
+
 For `linux-laptop` on a non-NixOS distribution, finish the GPU setup before
 launching Ghostty or other GPU-accelerated Nix apps. The profile enables Home
 Manager's `targets.genericLinux` integration, but creating the system-wide

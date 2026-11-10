@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
 
@@ -11,14 +11,21 @@
   home.enableNixpkgsReleaseCheck = false;
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg: lib.getName pkg == "claude-code";
 
   home.packages = with pkgs; [
 
     git-absorb
     nano
+    htop
 
     gh
+
+    codex
+    claude-code
 
     # modern shell tools
     ripgrep # grep
@@ -32,10 +39,16 @@
 
     ffmpeg
 
+    docker
+    kind
+    kubectl
+    k9s
     kubernetes-helm
     dive
 
     uv
+
+    rustup
 
     nil
   ];
@@ -101,6 +114,10 @@
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
+    settings = {
+      kubernetes.disabled = false;
+      mise.disabled = false;
+    };
   };
 
   programs.man.generateCaches = pkgs.stdenv.hostPlatform.isLinux;
