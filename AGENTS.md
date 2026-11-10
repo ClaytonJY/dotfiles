@@ -5,9 +5,9 @@
 - This is a public Home Manager flake for personal dotfiles.
 - Keep secrets, private Git identity, SSH keys, employer names, and machine-specific credentials out of this repo.
 - `home.nix` is the shared base module.
-- `profiles/gui.nix` adds GUI/user-facing extras such as fonts.
-- `profiles/linux-gui.nix` adds Linux GUI plumbing such as fontconfig, non-NixOS GPU integration, and the Linux build of Ghostty.
-- `profiles/darwin-gui.nix` adds native macOS Ghostty, configured to launch Fish without changing the account's login shell.
+- `profiles/gui.nix` adds fonts and enables Ghostty with shared Fish login-shell and FiraCode Nerd Font settings.
+- `profiles/linux-gui.nix` adds Linux GUI plumbing: fontconfig and non-NixOS GPU integration.
+- `profiles/darwin-gui.nix` selects native macOS Ghostty and disables its built-in updater so Home Manager controls updates.
 - Current profiles:
   - `linux-laptop`: `x86_64-linux`, GUI.
   - `macbook`: `aarch64-darwin`, GUI placeholder values.

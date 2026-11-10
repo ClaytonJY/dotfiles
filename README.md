@@ -106,6 +106,11 @@ Profiles are named by role and platform:
 | `macbook` | `aarch64-darwin` | yes | Apple Silicon MacBook |
 | `linux-vm` | `x86_64-linux` | no | Headless or lightweight Linux VM |
 
+Both GUI profiles enable Ghostty through `profiles/gui.nix`, using FiraCode Nerd
+Font and launching the managed Fish as a login shell regardless of the account's
+login shell. Platform modules provide Linux GUI integration and the native macOS
+Ghostty package.
+
 Each profile sets `home.username` and `home.homeDirectory` in `flake.nix`.
 Before switching on a machine with a different account name or home path, update
 that profile's values.
@@ -236,8 +241,8 @@ Home Manager installs the native Ghostty app at
 open "$HOME/Applications/Home Manager Apps/Ghostty.app"
 ```
 
-Ghostty starts the managed Fish as a login shell, uses FiraCode Nerd Font, and
-gets updates through the flake. Home Manager copies fonts into
+Ghostty's built-in macOS updater is disabled; updates come through the flake.
+Home Manager copies fonts into
 `~/Library/Fonts/HomeManager`; restart apps to refresh their font lists. If a
 later switch reports an App Management permission error, grant that permission
 to the terminal running the switch under System Settings → Privacy & Security →
