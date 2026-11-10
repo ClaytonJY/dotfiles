@@ -102,6 +102,15 @@
       if test -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
         source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
       end
+
+      # Fish discovers these before shellInit when NIX_PROFILES is inherited.
+      # A direct GUI launch may only have initialized Nix just above.
+      for profile in (string split ' ' "$NIX_PROFILES")
+        set -l completions "$profile/share/fish/vendor_completions.d"
+        if test -d "$completions"; and not contains -- "$completions" $fish_complete_path
+          set -p fish_complete_path "$completions"
+        end
+      end
     '';
     plugins = [
       {
