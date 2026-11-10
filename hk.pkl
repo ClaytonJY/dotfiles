@@ -2,7 +2,7 @@ amends "package://github.com/jdx/hk/releases/download/v1.46.0/hk@1.46.0#/Config.
 
 local fastSteps = new Mapping<String, Step> {
   ["nix-fmt"] {
-    check = "nix fmt -- --check ."
+    check = "nix fmt -- --ci"
   }
 }
 

@@ -4,6 +4,10 @@ My personal dotfile repo. Managed with [`nix`](https://nixos.org/manual/nix/stab
 
 ## Bootstrapping a new environment
 
+For a new Apple Silicon Mac, also follow the [MacBook first-run checklist](#macbook-first-run-checklist).
+Run the bootstrap commands in Bash or macOS's default Zsh; switch to Fish after
+activation.
+
 Install basic OS prerequisites first.
 
 ```shell
@@ -11,10 +15,12 @@ Install basic OS prerequisites first.
 sudo apt update && sudo apt install -y curl git
 ```
 
-On macOS, install the Xcode Command Line Tools if `git` is missing.
+On macOS, install the Xcode Command Line Tools for Git and native development
+tools. Wait for the installer to finish, then check the selected developer path:
 
 ```shell
 xcode-select --install
+xcode-select -p
 ```
 
 If this machine already has an older upstream Nix install from the Determinate
@@ -35,7 +41,12 @@ fi
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-Otherwise, use the [Determinate Systems Nix Installer](https://docs.determinate.systems/) to install Determinate Nix and `determinate-nixd`.
+For a fresh macOS install, use the graphical **Determinate.pkg** installer from
+[Determinate's installation page](https://determinate.systems/install/), their
+recommended macOS installation method. It installs Determinate Nix and
+`determinate-nixd`.
+
+For a fresh Linux install, use the [Determinate Systems Nix Installer](https://docs.determinate.systems/):
 
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
@@ -116,6 +127,9 @@ nix run .#home-manager -- switch --flake .#linux-laptop
 ```
 
 Use `.#macbook` on an Apple Silicon MacBook, or `.#linux-vm` on a Linux VM.
+Do not run the switch with `sudo`. Open a new terminal after activation, or enter
+the installed Fish directly with `~/.nix-profile/bin/fish --login`, before using
+the new commands and shell integrations.
 
 All profiles include Docker, `kind`, `kubectl`, and Helm 4. Home Manager provides the Docker command but does not install or start a Docker daemon. Install and start Docker Engine through the host OS on Linux; on macOS, use Docker Desktop or Colima. `kind` requires a reachable Docker daemon.
 
@@ -169,9 +183,8 @@ chsh -s "$fish_path"
 sudo chsh -s "$fish_path" "$USER"
 ```
 
-On macOS, run the `macbook` profile first, confirm the installed Fish path with
-`which fish`, and use the system shell settings or `chsh` if you want Fish as
-the login shell.
+On macOS, Ghostty starts Fish directly, so changing the account's login shell is
+optional. See the MacBook checklist below.
 
 If this repository was cloned over HTTPS on a fresh machine, use the installed
 GitHub CLI to set up SSH and flip the remote afterward:
@@ -186,7 +199,160 @@ git remote -v
 `gh auth login --git-protocol ssh` will offer to upload an existing SSH key, or
 create and upload one if none is available.
 
+## MacBook first-run checklist
+
+The `macbook` profile uses native `aarch64-darwin` packages. Its account values
+are still placeholders. In Terminal.app, before the first build, run:
+
+```shell
+uname -m
+id -un
+printf '%s\n' "$HOME"
+```
+
+Expect `arm64`. Set the `macbook` username and home directory in `flake.nix` to
+match the other two results. Use a native terminal session if `uname -m` reports
+`x86_64`. Complete the prerequisites, Nix installation, clone, and private Git
+identity steps above, then build before activating:
+
+```shell
+mkdir -p ~/.local/state/nix/profiles
+nix run .#home-manager -- build --flake .#macbook
+nix run .#home-manager -- switch --flake .#macbook
+```
+
+If activation reports existing dotfiles, inspect and merge their useful settings
+first, especially any existing Git identity. To preserve conflicting files as
+backups while activating, retry with a unique backup suffix:
+
+```shell
+nix run .#home-manager -- switch --flake .#macbook -b "before-hm-$(date +%Y%m%d-%H%M%S)"
+```
+
+Home Manager installs the native Ghostty app at
+`~/Applications/Home Manager Apps/Ghostty.app`. Launch that copy from Finder or:
+
+```shell
+open "$HOME/Applications/Home Manager Apps/Ghostty.app"
+```
+
+Ghostty starts the managed Fish as a login shell, uses FiraCode Nerd Font, and
+gets updates through the flake. Home Manager copies fonts into
+`~/Library/Fonts/HomeManager`; restart apps to refresh their font lists. If a
+later switch reports an App Management permission error, grant that permission
+to the terminal running the switch under System Settings → Privacy & Security →
+App Management, then retry.
+
+For Terminal.app or an IDE terminal, select `~/.nix-profile/bin/fish` as the shell
+(expand `~` to the actual home directory if the application's settings require
+an absolute path). To make Fish the account's login shell as well, run these
+commands **from Bash or Zsh** after activation:
+
+```shell
+fish_path="$HOME/.nix-profile/bin/fish"
+test -x "$fish_path" && {
+  if ! grep -qxF "$fish_path" /etc/shells; then
+    printf '%s\n' "$fish_path" | sudo tee -a /etc/shells
+  fi
+  chsh -s "$fish_path"
+}
+```
+
+Use the stable profile path in `/etc/shells`, so package upgrades do not leave
+the login shell pointing at an old store path. Open a new terminal afterward.
+`chsh -s /bin/zsh` restores the macOS default.
+
+In a fresh Fish window, verify the environment and Git identity:
+
+```shell
+type -a nix home-manager git fish mise
+nix --version
+git var GIT_AUTHOR_IDENT
+gh auth status
+```
+
+Nix and Home Manager should be on `PATH` even when Fish starts directly from a
+GUI app. `git var` should report the intended identity; repeat it inside a work
+checkout to verify any private `includeIf` routing. If it reports the wrong
+identity, also inspect `~/.gitconfig`, which Git can read alongside the managed
+`~/.config/git/config`. Authenticate `gh` with the intended account if needed.
+
+Install and start the employer's standard container runtime separately. This
+profile supplies the Docker CLI (including Compose and Buildx), `kind`, and
+Kubernetes tools. It does not provision a container VM. Once the runtime is
+running, check:
+
+```shell
+docker context ls
+docker version
+docker compose version
+docker buildx version
+docker run --rm hello-world
+```
+
+`docker version` must show both Client and Server. Select the runtime's context
+from `docker context ls` if necessary; for Docker Desktop it is usually
+`desktop-linux`. If a configured `DOCKER_HOST` or `DOCKER_CONTEXT` points to an
+old runtime, clear it before retrying. For Docker Desktop credential-helper
+errors, check its CLI installation settings so `docker-credential-desktop` is
+on `PATH`; see [Docker's Mac installation details](https://docs.docker.com/desktop/setup/install/mac-permission-requirements/).
+Run `kind` only after Docker can reach the server. Prefer container images that
+publish `linux/arm64`; use the runtime's emulation support when a project requires
+`linux/amd64`.
+
+Finish with `mise trust`, `mise install`, and `mise x -- hk check --all` in this
+checkout. Linux can evaluate the Darwin profile, but the actual Darwin build,
+activation, GUI permissions, and container runtime need verification on the Mac.
+Keep `flake.lock` unchanged during initial setup to use the reviewed versions.
+
 ## Development
+
+### Nix editor and formatting
+
+All profiles install `nixd` for editor language features and `nixfmt` for
+formatting. `nixd` is a language server, separate from `determinate-nixd`, which
+manages the Determinate Nix installation and background services. Installing
+`nixd` does not replace the system's Determinate `nix` command.
+
+For VS Code with Nix IDE, put these settings in `.vscode/settings.json`:
+
+```json
+{
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd",
+  "nix.serverSettings": {
+    "nixd": {
+      "nixpkgs": {
+        "expr": "import (builtins.getFlake \"${workspaceFolder}\").inputs.nixpkgs { }"
+      },
+      "formatting": {
+        "command": ["nixfmt"]
+      },
+      "options": {
+        "nixos": {
+          "expr": "{}"
+        },
+        "home-manager": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").homeConfigurations.\"linux-laptop\".options"
+        }
+      }
+    }
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  }
+}
+```
+
+Use `macbook` or `linux-vm` in the Home Manager options expression for those
+profiles. The empty NixOS option set disables the default channel-based lookup
+for this standalone Home Manager flake. The managed Git ignore rules keep
+`.vscode` local to each checkout. After activating Home Manager, restart the Nix
+language server in VS Code so it picks up the new packages and settings.
+
+The flake's formatter is `nixfmt-tree`, which runs the same pinned `nixfmt`
+across the repository. Run `nix fmt` to format Nix files; hooks use
+`nix fmt -- --ci` to check formatting without changing files.
 
 ### Working with Codex
 

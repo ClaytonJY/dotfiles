@@ -9,14 +9,21 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs =
+    { nixpkgs, home-manager, ... }:
     let
       supportedSystems = [
         "x86_64-linux"
         "aarch64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      mkHome = { system, username, homeDirectory, extraModules ? [ ] }:
+      mkHome =
+        {
+          system,
+          username,
+          homeDirectory,
+          extraModules ? [ ],
+        }:
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           modules = [
@@ -25,12 +32,14 @@
               home.homeDirectory = homeDirectory;
             }
             ./home.nix
-          ] ++ extraModules;
+          ]
+          ++ extraModules;
         };
       # Capability modules compose the common base for each concrete profile.
       profileModules = {
         gui = [ ./profiles/gui.nix ];
         linuxGui = [ ./profiles/linux-gui.nix ];
+        darwinGui = [ ./profiles/darwin-gui.nix ];
       };
       homeConfigurations = {
         "linux-laptop" = mkHome {
@@ -45,7 +54,7 @@
           system = "aarch64-darwin";
           username = "claytonjy";
           homeDirectory = "/Users/claytonjy";
-          extraModules = profileModules.gui;
+          extraModules = profileModules.gui ++ profileModules.darwinGui;
         };
 
         # Placeholder account values; edit for the target VM account before first use.
@@ -77,7 +86,6 @@
         };
       });
 
-      formatter =
-        forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }

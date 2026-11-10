@@ -50,7 +50,8 @@
 
     rustup
 
-    nil
+    nixd # Editor language server; separate from the determinate-nixd daemon.
+    nixfmt
   ];
 
   programs.git = {
@@ -95,6 +96,13 @@
 
   programs.fish = {
     enable = true;
+    # Fish may be installed after Determinate's installer has configured shells.
+    # Also initialize Nix when launched directly by a GUI terminal.
+    shellInit = lib.mkBefore ''
+      if test -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+      end
+    '';
     plugins = [
       {
         name = "fzf.fish";

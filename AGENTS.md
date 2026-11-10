@@ -6,7 +6,8 @@
 - Keep secrets, private Git identity, SSH keys, employer names, and machine-specific credentials out of this repo.
 - `home.nix` is the shared base module.
 - `profiles/gui.nix` adds GUI/user-facing extras such as fonts.
-- `profiles/linux-gui.nix` adds Linux GUI plumbing such as fontconfig, non-NixOS GPU integration, and Linux-only GUI apps such as Ghostty.
+- `profiles/linux-gui.nix` adds Linux GUI plumbing such as fontconfig, non-NixOS GPU integration, and the Linux build of Ghostty.
+- `profiles/darwin-gui.nix` adds native macOS Ghostty, configured to launch Fish without changing the account's login shell.
 - Current profiles:
   - `linux-laptop`: `x86_64-linux`, GUI.
   - `macbook`: `aarch64-darwin`, GUI placeholder values.
