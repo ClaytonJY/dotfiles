@@ -138,6 +138,11 @@ the new commands and shell integrations.
 
 All profiles include Docker, `kind`, `kubectl`, and Helm 4. Home Manager provides the Docker command but does not install or start a Docker daemon. Install and start Docker Engine through the host OS on Linux; on macOS, use Docker Desktop or Colima. `kind` requires a reachable Docker daemon.
 
+All profiles also include [`just`](https://just.systems/), a project task runner
+with Fish completions. In a project containing a `justfile`, run `just --list`
+to see available recipes and `just <recipe>` to run one. Use `just --choose`
+to pick a recipe interactively with the included `fzf`.
+
 For `linux-laptop` on a non-NixOS distribution, finish the GPU setup before
 launching Ghostty or other GPU-accelerated Nix apps. The profile enables Home
 Manager's `targets.genericLinux` integration, but creating the system-wide

@@ -47,6 +47,7 @@
     dive
 
     uv
+    just # Project task runner; includes shell completions.
 
     rustup
 
